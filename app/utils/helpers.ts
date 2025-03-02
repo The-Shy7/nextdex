@@ -1,10 +1,36 @@
+/**
+ * Helper Functions for Pokémon Application
+ * 
+ * This file contains utility functions for fetching and processing Pokémon data
+ * from the PokeAPI, as well as general helper functions used throughout the application.
+ */
+
+/**
+ * Capitalizes the first letter of a string
+ * 
+ * @param {string} str - The string to capitalize
+ * @returns {string} The capitalized string
+ */
 export function capitalize(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-// Add delay between API calls to avoid rate limiting
+/**
+ * Creates a delay using a Promise
+ * Used to prevent rate limiting when making multiple API calls
+ * 
+ * @param {number} ms - The delay time in milliseconds
+ * @returns {Promise<void>} A promise that resolves after the specified delay
+ */
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
+/**
+ * Fetches detailed data for a specific Pokémon by ID
+ * Includes additional API calls to get ability and move descriptions
+ * 
+ * @param {number} id - The Pokémon ID to fetch
+ * @returns {Promise<any>} Promise resolving to the Pokémon data with enhanced details
+ */
 export async function fetchPokemon(id: number): Promise<any> {
   try {
     const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
@@ -105,6 +131,13 @@ export async function fetchPokemon(id: number): Promise<any> {
   }
 }
 
+/**
+ * Fetches a paginated list of Pokémon
+ * 
+ * @param {number} limit - Number of Pokémon to fetch per page
+ * @param {number} offset - Starting index for pagination
+ * @returns {Promise<any>} Promise resolving to the paginated Pokémon list
+ */
 export async function fetchPokemonList(limit: number = 20, offset: number = 0): Promise<any> {
   try {
     const response = await fetch(
@@ -120,6 +153,42 @@ export async function fetchPokemonList(limit: number = 20, offset: number = 0): 
   }
 }
 
+/**
+ * Fetches all Pokémon names and IDs for global search functionality
+ * 
+ * @returns {Promise<Array<{name: string, id: number}>>} Promise resolving to an array of Pokémon names and IDs
+ */
+export async function fetchAllPokemonNames(): Promise<Array<{name: string, id: number}>> {
+  try {
+    // Fetch with a large limit to get all Pokémon in one request
+    // The current Pokémon count is around 1000, so 2000 should be future-proof
+    const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=2000');
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    
+    const data = await response.json();
+    
+    // Extract name and ID from each result
+    return data.results.map((pokemon: any) => {
+      const id = parseInt(pokemon.url.split('/').slice(-2, -1)[0]);
+      return {
+        name: pokemon.name,
+        id
+      };
+    });
+  } catch (error) {
+    console.error('Error fetching all Pokemon names:', error);
+    return []; // Return empty array on error to prevent app from crashing
+  }
+}
+
+/**
+ * Fetches detailed information about a specific move
+ * 
+ * @param {string} url - The URL of the move to fetch details for
+ * @returns {Promise<string>} Promise resolving to the move description
+ */
 export async function fetchMoveDetails(url: string): Promise<string> {
   try {
     // Add timeout to fetch to prevent hanging requests

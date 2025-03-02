@@ -19,9 +19,8 @@
 import { useState, useEffect } from 'react';
 import { Pokemon, PokemonList } from './types/pokemon';
 import PokemonCard from './components/PokemonCard';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Search, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Search } from 'lucide-react';
 import { fetchPokemon, fetchPokemonList, fetchAllPokemonNames } from './utils/helpers';
 import Pagination from './components/Pagination';
 
