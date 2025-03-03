@@ -78,15 +78,49 @@ export default function Home() {
         
         // If there's a search term and we have all Pokémon names, filter and fetch those Pokémon
         if (searchTerm && allPokemonNames.length > 0) {
-          // Filter Pokémon names that match the search term
+          // Improved search filtering - match exact words or beginning of names
+          const normalizedSearchTerm = searchTerm.toLowerCase().trim();
+          
+          // Filter Pokémon names that match the search term more precisely
           const filteredNames = allPokemonNames
-            .filter(pokemon => pokemon.name.toLowerCase().includes(searchTerm.toLowerCase()))
+            .filter(pokemon => {
+              const pokemonName = pokemon.name.toLowerCase();
+              
+              // Exact match
+              if (pokemonName === normalizedSearchTerm) {
+                return true;
+              }
+              
+              // Starts with search term
+              if (pokemonName.startsWith(normalizedSearchTerm)) {
+                return true;
+              }
+              
+              // Contains the search term as a whole word
+              const nameWords = pokemonName.split('-');
+              return nameWords.some(word => word === normalizedSearchTerm);
+            })
             .slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE);
           
           // Calculate total pages for the search results
-          const totalFilteredItems = allPokemonNames.filter(
-            pokemon => pokemon.name.toLowerCase().includes(searchTerm.toLowerCase())
-          ).length;
+          const totalFilteredItems = allPokemonNames.filter(pokemon => {
+            const pokemonName = pokemon.name.toLowerCase();
+            
+            // Exact match
+            if (pokemonName === normalizedSearchTerm) {
+              return true;
+            }
+            
+            // Starts with search term
+            if (pokemonName.startsWith(normalizedSearchTerm)) {
+              return true;
+            }
+            
+            // Contains the search term as a whole word
+            const nameWords = pokemonName.split('-');
+            return nameWords.some(word => word === normalizedSearchTerm);
+          }).length;
+          
           setTotalPages(Math.ceil(totalFilteredItems / ITEMS_PER_PAGE));
           
           // Fetch detailed data for each filtered Pokémon
@@ -136,7 +170,7 @@ export default function Home() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800">
       <div className="max-w-7xl mx-auto px-4 py-8">
         <h1 className="text-5xl font-bold text-center mb-2 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Pokédex</h1>
-        <p className="text-center text-gray-600 dark:text-gray-300 mb-8">Explore the world of Pokémon</p>
+        <p className="text-center text-gray-600 dark:text-gray-300 mb-8">Explore the world of Pokémon!</p>
         
         {/* Search input with icon */}
         <div className="relative mb-8 max-w-md mx-auto">
