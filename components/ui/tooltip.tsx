@@ -1,28 +1,19 @@
+"use client"
+
 /**
  * Tooltip Component
  * 
- * A popup that displays information related to an element when the element 
- * receives keyboard focus or the mouse hovers over it.
- * 
- * This component is built using Radix UI's Tooltip primitive which provides
- * accessibility features, proper positioning, and keyboard interactions.
+ * This component provides a tooltip that appears when hovering over or focusing on an element.
+ * It's built on Radix UI's Tooltip primitive for accessibility and customizability.
  * 
  * Features:
- * - Accessible: follows WAI-ARIA tooltip pattern
- * - Appears on hover or focus
- * - Customizable delay for showing/hiding
- * - Proper positioning that adjusts based on viewport edges
- * - Animated transitions
+ * - Accessible by default, following WAI-ARIA Tooltip pattern
+ * - Customizable appearance with Tailwind CSS
+ * - Supports keyboard navigation
+ * - Configurable delay for showing/hiding
+ * - Proper positioning that adjusts based on available space
  * 
- * Usage example:
- * <TooltipProvider>
- *   <Tooltip>
- *     <TooltipTrigger>Hover me</TooltipTrigger>
- *     <TooltipContent>
- *       <p>Tooltip content</p>
- *     </TooltipContent>
- *   </Tooltip>
- * </TooltipProvider>
+ * @component
  */
 
 import * as React from "react"
@@ -31,27 +22,47 @@ import * as TooltipPrimitive from "@radix-ui/react-tooltip"
 import { cn } from "@/lib/utils"
 
 /**
- * TooltipProvider component
- * Provides context for all tooltip components
- * Controls global tooltip settings like delay duration
+ * TooltipProvider Component
+ * 
+ * Provides context for all tooltip components.
+ * Allows for global configuration of tooltip behavior.
+ * 
+ * @component
+ * @param {Object} props - Component props
+ * @param {React.ReactNode} props.children - Child components
+ * @param {number} [props.delayDuration=700] - Delay before showing tooltip (in ms)
+ * @param {number} [props.skipDelayDuration=300] - Skip delay when moving between tooltips (in ms)
  */
 const TooltipProvider = TooltipPrimitive.Provider
 
 /**
- * Tooltip component
- * The root container for tooltip functionality
+ * Tooltip Component
+ * 
+ * Root component that wraps the trigger and content.
+ * 
+ * @component
  */
 const Tooltip = TooltipPrimitive.Root
 
 /**
- * TooltipTrigger component
- * The element that triggers the tooltip when hovered or focused
+ * TooltipTrigger Component
+ * 
+ * The element that triggers the tooltip when hovered or focused.
+ * 
+ * @component
  */
 const TooltipTrigger = TooltipPrimitive.Trigger
 
 /**
- * TooltipContent component
- * The popup content of the tooltip
+ * TooltipContent Component
+ * 
+ * The content displayed in the tooltip.
+ * 
+ * @component
+ * @param {Object} props - Component props
+ * @param {React.ReactNode} props.children - Tooltip content
+ * @param {string} [props.className] - Additional CSS classes
+ * @param {string} [props.sideOffset=4] - Offset from the trigger (in px)
  */
 const TooltipContent = React.forwardRef<
   React.ElementRef<typeof TooltipPrimitive.Content>,
@@ -61,7 +72,7 @@ const TooltipContent = React.forwardRef<
     ref={ref}
     sideOffset={sideOffset}
     className={cn(
-      "z-50 overflow-hidden rounded-md border bg-popover px-3 py-1.5 text-sm text-popover-foreground shadow-md animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+      "z-50 overflow-hidden rounded-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-1.5 text-sm text-gray-950 dark:text-gray-50 shadow-md animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
       className
     )}
     {...props}

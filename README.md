@@ -43,7 +43,9 @@ A modern, responsive web application that serves as a comprehensive Pokémon enc
 ### Components
 - **PokemonCard**: Displays detailed information about a single Pokémon
 - **Pagination**: Provides navigation between pages of Pokémon
-- **UI Components**: Button, Input, Card, Badge, Tooltip from shadcn/ui
+- **UI Components**: 
+  - **shadcn/ui**: Button, Input, Card, Badge, Tooltip
+  - **next-themes**: ThemeProvider, ThemeToggle
 
 ### Data Handling
 - **API Integration**: Fetches data from the PokeAPI with error handling and rate limiting

@@ -89,7 +89,7 @@ export default function Pagination({
         variant="outline"
         onClick={() => onPageChange(Math.max(currentPage - 1, 1))}
         disabled={currentPage === 1}
-        className="border-2 hover:bg-blue-50 dark:hover:bg-gray-800 transition-all duration-300"
+        className="border-2 hover:bg-blue-50 dark:hover:bg-gray-800 dark:border-gray-700 transition-all duration-300"
       >
         <ChevronLeft className="h-4 w-4 mr-2" />
         Previous
@@ -105,8 +105,8 @@ export default function Pagination({
                 onClick={() => onPageChange(page)}
                 className={`w-10 h-10 p-0 ${
                   currentPage === page 
-                    ? "bg-blue-600 hover:bg-blue-700" 
-                    : "border-2 hover:bg-blue-50 dark:hover:bg-gray-800"
+                    ? "bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800" 
+                    : "border-2 hover:bg-blue-50 dark:hover:bg-gray-800 dark:border-gray-700"
                 } transition-all duration-300`}
               >
                 {page}
@@ -123,14 +123,14 @@ export default function Pagination({
         variant="outline"
         onClick={() => onPageChange(Math.min(currentPage + 1, totalPages))}
         disabled={currentPage === totalPages}
-        className="border-2 hover:bg-blue-50 dark:hover:bg-gray-800 transition-all duration-300"
+        className="border-2 hover:bg-blue-50 dark:hover:bg-gray-800 dark:border-gray-700 transition-all duration-300"
       >
         Next
         <ChevronRight className="h-4 w-4 ml-2" />
       </Button>
       
       {/* Current page indicator */}
-      <span className="text-sm bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm px-4 py-2 rounded-md ml-2">
+      <span className="text-sm bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm px-4 py-2 rounded-md ml-2 dark:text-gray-200">
         Page {currentPage} of {totalPages}
       </span>
     </div>

@@ -66,27 +66,27 @@ const TYPE_COLORS = {
  */
 const STAT_COLORS = {
   'hp': {
-    bg: 'bg-red-100',
+    bg: 'bg-red-100 dark:bg-red-950/30',
     bar: 'bg-red-500'
   },
   'attack': {
-    bg: 'bg-orange-100',
+    bg: 'bg-orange-100 dark:bg-orange-950/30',
     bar: 'bg-orange-500'
   },
   'defense': {
-    bg: 'bg-yellow-100',
+    bg: 'bg-yellow-100 dark:bg-yellow-950/30',
     bar: 'bg-yellow-500'
   },
   'special-attack': {
-    bg: 'bg-blue-100',
+    bg: 'bg-blue-100 dark:bg-blue-950/30',
     bar: 'bg-blue-500'
   },
   'special-defense': {
-    bg: 'bg-green-100',
+    bg: 'bg-green-100 dark:bg-green-950/30',
     bar: 'bg-green-500'
   },
   'speed': {
-    bg: 'bg-pink-100',
+    bg: 'bg-pink-100 dark:bg-pink-950/30',
     bar: 'bg-pink-500'
   }
 } as const;
@@ -94,11 +94,11 @@ const STAT_COLORS = {
 export default function PokemonCard({ pokemon }: PokemonCardProps) {
   return (
     <TooltipProvider>
-      <Card className="w-full h-full hover:shadow-xl transition-all duration-300 bg-white/50 backdrop-blur-sm border-2">
+      <Card className="w-full h-full hover:shadow-xl transition-all duration-300 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm border-2 dark:border-gray-700">
         {/* Card Header with Pokémon name, ID, and types */}
         <CardHeader className="pb-2">
           <div className="flex items-center justify-between">
-            <CardTitle className="text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
+            <CardTitle className="text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 dark:from-gray-100 dark:to-gray-300 bg-clip-text text-transparent">
               {capitalize(pokemon.name)} #{pokemon.id.toString().padStart(3, '0')}
             </CardTitle>
             <div className="flex gap-2">
@@ -119,7 +119,7 @@ export default function PokemonCard({ pokemon }: PokemonCardProps) {
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Pokémon image container */}
-            <div className="flex justify-center items-center bg-gray-50 rounded-lg p-4 hover:scale-105 transition-transform duration-300">
+            <div className="flex justify-center items-center bg-gray-50 dark:bg-gray-900 rounded-lg p-4 hover:scale-105 transition-transform duration-300">
               <img
                 src={pokemon.sprites.other['official-artwork'].front_default}
                 alt={pokemon.name}
@@ -134,7 +134,7 @@ export default function PokemonCard({ pokemon }: PokemonCardProps) {
                 <h3 className="font-semibold mb-3 text-lg">Stats</h3>
                 {pokemon.stats.map((stat) => {
                   const statName = stat.stat.name as keyof typeof STAT_COLORS;
-                  const statColors = STAT_COLORS[statName] || { bg: 'bg-gray-100', bar: 'bg-gray-500' };
+                  const statColors = STAT_COLORS[statName] || { bg: 'bg-gray-100 dark:bg-gray-800', bar: 'bg-gray-500' };
                   return (
                     <div key={stat.stat.name} className="mb-3">
                       <div className="flex justify-between mb-1">
@@ -169,7 +169,7 @@ export default function PokemonCard({ pokemon }: PokemonCardProps) {
                           </Badge>
                         </div>
                       </TooltipTrigger>
-                      <TooltipContent className="max-w-[300px] p-4 bg-white/90 backdrop-blur-sm">
+                      <TooltipContent className="max-w-[300px] p-4 bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm border dark:border-gray-700 text-foreground">
                         <p className="text-sm">{description}</p>
                       </TooltipContent>
                     </Tooltip>
@@ -180,7 +180,7 @@ export default function PokemonCard({ pokemon }: PokemonCardProps) {
               {/* Moves section with tooltips and type-based colors */}
               <div>
                 <h3 className="font-semibold mb-3 text-lg">Moves</h3>
-                <div className="flex flex-wrap gap-2 max-h-32 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+                <div className="flex flex-wrap gap-2 max-h-32 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-gray-100 dark:scrollbar-track-gray-800">
                   {/* Use index in the key to ensure uniqueness */}
                   {pokemon.moves.map(({ move, description, power, accuracy, type }, index) => {
                     const moveType = type as keyof typeof TYPE_COLORS;
@@ -197,9 +197,9 @@ export default function PokemonCard({ pokemon }: PokemonCardProps) {
                             </Badge>
                           </div>
                         </TooltipTrigger>
-                        <TooltipContent className="max-w-[300px] p-4 bg-white/90 backdrop-blur-sm">
+                        <TooltipContent className="max-w-[300px] p-4 bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm border dark:border-gray-700 text-foreground">
                           <p className="text-sm mb-2">{description}</p>
-                          <div className="flex gap-3 text-xs font-medium text-gray-600">
+                          <div className="flex gap-3 text-xs font-medium text-gray-600 dark:text-gray-300">
                             {power !== null && <span>Power: {power}</span>}
                             {accuracy !== null && <span>Accuracy: {accuracy}%</span>}
                           </div>
