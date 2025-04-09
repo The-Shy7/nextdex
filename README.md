@@ -1,4 +1,4 @@
-# Pokédex Web Application
+# NextDex
 
 A modern, responsive web application that serves as a comprehensive Pokémon encyclopedia, built with Next.js, TypeScript, and Tailwind CSS.
 
